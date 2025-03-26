@@ -1,7 +1,8 @@
 const FLOOR_POSITION = 300;
 const JUMP_SPEED = 9;
 const GRAVITY = 0.2;
-let gameIsPlaying = false, time, upSpeed, pressedKeys = {}, cactusesCount, lastRemovedCactusIndex;
+let gameIsPlaying = false, playInterval;
+let time, upSpeed, pressedKeys = {}, cactusesCount, lastRemovedCactusIndex;
 
 /// Setup pressed keys tracking for dinosaur jumping
 window.addEventListener('keydown', onKeyDown);
@@ -20,6 +21,30 @@ function onKeyUp(event) {
   pressedKeys[event.key] = false;
 }
 
+function dinosaurHitCactus(el1, el2) {
+  let dinosaur = document.getElementById('dinosaur');
+  let cactus = document.getElementById('cactus-' + (lastRemovedCactusIndex + 1));
+  if (!cactus) {
+    return false;
+  }
+  let rectDinosaur = dinosaur.getBoundingClientRect();
+  let rectCactus = cactus.getBoundingClientRect();
+  rectDinosaur.left += 15;
+  rectDinosaur.top += 10;
+  rectDinosaur.width -= 30;
+  rectDinosaur.height -= 20;
+  rectCactus.left += 15;
+  rectCactus.top += 10;
+  rectCactus.width -= 30;
+  rectCactus.height -= 20;
+  return !(
+      ((rectDinosaur.top + rectDinosaur.height) < (rectCactus.top)) ||
+      (rectDinosaur.top > (rectCactus.top + rectCactus.height)) ||
+      ((rectDinosaur.left + rectDinosaur.width) < rectCactus.left) ||
+      (rectDinosaur.left > (rectCactus.left + rectCactus.width))
+  );
+}
+
 function moveDinosaur() {
   let dinosaur = document.getElementById('dinosaur');
   let curPos = parseInt(dinosaur.style.top);
@@ -34,6 +59,12 @@ function moveDinosaur() {
 
   /// Update the upSpeed of the dinosaur by applying the gravity force
   upSpeed = upSpeed - GRAVITY;
+
+  /// Check if dinosaur hit a cactus
+  if (dinosaurHitCactus()) {
+    gameIsPlaying = false;
+    clearInterval(playInterval);
+  }
 }
 
 function createCactus() {
@@ -81,5 +112,5 @@ function startGame() {
   time = 0;
   cactusesCount = 0;
   lastRemovedCactusIndex = 0;
-  let playInterval = window.setInterval(updateGame, 5);
+  playInterval = window.setInterval(updateGame, 5);
 }
