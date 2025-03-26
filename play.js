@@ -1,10 +1,19 @@
 const FLOOR_POSITION = 300;
 const JUMP_SPEED = 35;
 const GRAVITY = 4;
-let upSpeed, pressedKeys;
+let gameIsPlaying = false, upSpeed, pressedKeys = {};
+
+/// Setup pressed keys tracking for dinosaur jumping
+window.addEventListener('keydown', onKeyDown);
+window.addEventListener('keyup', onKeyUp);
 
 function onKeyDown(event) {
   pressedKeys[event.key] = true;
+
+  /// Trigger the start of the game
+  if (!gameIsPlaying && pressedKeys[' ']) {
+    startGame();
+  }
 }
 
 function onKeyUp(event) {
@@ -32,12 +41,9 @@ function updateGame() {
 }
 
 function startGame() {
-  /// Don't start a new game if there is an ongoing game
-  if (document.getElementsByClassName('game-container')[0].innerHTML.includes('dinosaur')) {
-    return;
-  }
+  gameIsPlaying = true;
 
-  /// Create dinosaur
+  /// Delete everything from the past game (if any) and create the dinosaur
   document.getElementsByClassName('game-container')[0].innerHTML =
     '<img id="dinosaur" src="dinosaur.png" alt="dinosaur png missing" style="top: ' +
     FLOOR_POSITION +
@@ -46,10 +52,6 @@ function startGame() {
   /// Setup dinosaur movement
   upSpeed = 0;
   pressedKeys = {};
-
-  /// Setup pressed keys tracking for dinosaur jumping
-  window.addEventListener('keydown', onKeyDown);
-  window.addEventListener('keyup', onKeyUp);
 
   /// Update the game
   let playInterval = window.setInterval(updateGame, 50);
