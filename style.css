@@ -1,0 +1,23 @@
+.game-container {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 25px;
+  width: 1000px;
+  height: 400px;
+  background-color: #ECECEC;
+}
+
+.game-header {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: 800px;
+}
+
+.dinosaur {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: 300px;
+  left: 50px;
+}
