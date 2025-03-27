@@ -1,19 +1,14 @@
+/**************************************
+ * We let Bootstrap handle most of the
+ * layout & typography. Keep only the
+ * game-specific styling here.
+ **************************************/
+
 .game-container {
   position: relative;
   margin: 0 auto;
   margin-top: 25px;
   background-color: #ECECEC;
-}
-
-.game-header {
-  text-align: center;
-  position: relative;
-  margin: 0 auto;
-  width: 800px;
-}
-
-.score-displayer {
-  position: absolute;
 }
 
 #dinosaur {
