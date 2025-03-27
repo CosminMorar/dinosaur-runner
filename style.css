@@ -2,8 +2,6 @@
   position: relative;
   margin: 0 auto;
   margin-top: 25px;
-  width: 1000px;
-  height: 400px;
   background-color: #ECECEC;
 }
 
@@ -16,12 +14,8 @@
 
 #dinosaur {
   position: absolute;
-  width: 80px;
-  height: 80px;
 }
 
 .cactus {
   position: absolute;
-  width: 60px;
-  height: 100px;
 }
