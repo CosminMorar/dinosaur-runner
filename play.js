@@ -22,17 +22,26 @@ const CACTUS_START_LEFT_POSITION = GAME_WIDTH - CACTUS_WIDTH;
 const GAME_PLAY_SPEED = 5;
 const CACTUS_CREATION_SPEED = 200;
 const CACTUS_HORIZONTAL_MOVING_SPEED = 2;
-const SCORE_UPDATE_RATE = 100 / GAME_PLAY_SPEED;
+const SCORE_UPDATE_RATE = 10;
 
 /// Dinosaur jumping
 const JUMP_SPEED = 9;
 const GRAVITY = 0.2;
 
-/// Collision Slippages
+/// Collision slippages
 const COLLISION_SLIPPAGE_LEFT = 15;
 const COLLISION_SLIPPAGE_TOP = 10;
 const COLLISION_SLIPPAGE_WIDTH = 2 * COLLISION_SLIPPAGE_LEFT;
 const COLLISION_SLIPPAGE_HEIGHT = 2 * COLLISION_SLIPPAGE_TOP;
+
+/// Sound files
+const GAME_START_SOUND_FILE_NAME = 'jump-sound.mp3';
+const JUMP_SOUND_FILE_NAME = 'jump-sound.mp3';
+const LOST_SOUND_FILE_NAME = 'lost-sound.mp3';
+const POINTS_ACHIEVEMENT_SOUND_FILE_NAME = '100-points-sound.mp3';
+
+/// Achievements
+const POINTS_FOR_ACHIEVEMENT = 100;
 
 let gameIsPlaying = false, gameTick;
 let time, upSpeed, pressedKeys = {}, cactusesCount, lastRemovedCactusIndex;
@@ -52,6 +61,11 @@ function onKeyDown(event) {
 
 function onKeyUp(event) {
   pressedKeys[event.key] = false;
+}
+
+function playSound(soundFileName) {
+  const sound = new Audio(soundFileName);
+  sound.play();
 }
 
 function applyCollisionSlippage(el) {
@@ -85,6 +99,7 @@ function moveDinosaur() {
   /// Make dinosaur jump
   if (pressedKeys[' '] && curPos == DINOSAUR_START_TOP_POS) {
     upSpeed = JUMP_SPEED;
+    playSound(JUMP_SOUND_FILE_NAME);
   }
 
   /// Update the position of the dinosaur
@@ -96,6 +111,7 @@ function moveDinosaur() {
   /// Stop the game if the dinosaur hit a cactus
   if (dinosaurHitCactus()) {
     gameIsPlaying = false;
+    playSound(LOST_SOUND_FILE_NAME);
     clearInterval(gameTick);
     updateHighScore();
   }
@@ -140,7 +156,10 @@ function createGameBoard() {
 
 function updateScore() {
   let score = document.getElementById('score');
-  score.innerHTML = Math.floor(time / (SCORE_UPDATE_RATE));
+  score.innerHTML = time / SCORE_UPDATE_RATE;
+  if (time / SCORE_UPDATE_RATE % POINTS_FOR_ACHIEVEMENT == 0) {
+    playSound('100-points-sound.mp3');
+  }
 }
 
 function updateHighScore() {
@@ -156,7 +175,9 @@ function updateGame() {
     createCactus();
   }
   moveCactuses();
-  updateScore();
+  if (time % SCORE_UPDATE_RATE == 0) {
+    updateScore();
+  }
 }
 
 function startGame() {
@@ -175,5 +196,6 @@ function startGame() {
   time = 0;
   cactusesCount = 0;
   lastRemovedCactusIndex = 0;
+  playSound(GAME_START_SOUND_FILE_NAME);
   gameTick = window.setInterval(updateGame, GAME_PLAY_SPEED);
 }
