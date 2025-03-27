@@ -22,6 +22,7 @@ const CACTUS_START_LEFT_POSITION = GAME_WIDTH - CACTUS_WIDTH;
 const GAME_PLAY_SPEED = 5;
 const CACTUS_CREATION_SPEED = 200;
 const CACTUS_HORIZONTAL_MOVING_SPEED = 2;
+const SCORE_UPDATE_RATE = 100 / GAME_PLAY_SPEED;
 
 /// Dinosaur jumping
 const JUMP_SPEED = 9;
@@ -96,6 +97,7 @@ function moveDinosaur() {
   if (dinosaurHitCactus()) {
     gameIsPlaying = false;
     clearInterval(gameTick);
+    updateHighScore();
   }
 }
 
@@ -136,6 +138,17 @@ function createGameBoard() {
     width: ${GAME_WIDTH}px; height: ${GAME_HEIGHT}px;">`;
 }
 
+function updateScore() {
+  let score = document.getElementById('score');
+  score.innerHTML = Math.floor(time / (SCORE_UPDATE_RATE));
+}
+
+function updateHighScore() {
+  let score = document.getElementById('score');
+  let highScore = document.getElementById('high-score');
+  highScore.innerHTML = Math.max(parseInt(score.innerHTML), parseInt(highScore.innerHTML));
+}
+
 function updateGame() {
   moveDinosaur();
   ++time;
@@ -143,8 +156,8 @@ function updateGame() {
     createCactus();
   }
   moveCactuses();
+  updateScore();
 }
-
 
 function startGame() {
   gameIsPlaying = true;

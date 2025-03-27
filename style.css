@@ -12,6 +12,10 @@
   width: 800px;
 }
 
+.score-displayer {
+  position: absolute;
+}
+
 #dinosaur {
   position: absolute;
 }
