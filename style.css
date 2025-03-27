@@ -18,3 +18,26 @@
 .cactus {
   position: absolute;
 }
+
+body {
+  background-color: #ffffff;
+}
+
+.flash-green {
+  animation: greenFlash 1s;
+}
+
+@keyframes greenFlash {
+  0% {
+    background-color: white;
+  }
+  30% {
+    background-color: #90EE90; /* Lighter green */
+  }
+  70% {
+    background-color: #90EE90; /* Lighter green */
+  }
+  100% {
+    background-color: white;
+  }
+}
