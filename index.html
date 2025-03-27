@@ -3,28 +3,53 @@
   <head>
     <meta charset="utf-8">
     <title>Dinosaur Runner</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    >
     <link rel="stylesheet" href="style.css">
     <script src="play.js"></script>
   </head>
-  <body>
-    <div class="game-header">
-      <div class="game-title">
-        <h1>Dinosaur Runner</h1>
+
+  <body class="bg-light">
+    <!-- Bootstrap Container for overall layout -->
+    <div class="container mt-4">
+
+      <!-- Title / Description row -->
+      <div class="row">
+        <div class="col text-center">
+          <h1 class="display-4 text-primary">Dinosaur Runner</h1>
+          <p class="lead">
+            Dinosaur T-Rex Game is a replica of the hidden Chrome browser game that
+            appears when there is no internet. Press the "space bar" key to start.
+            Make the dinosaur jump by using the "space bar" key or the "up arrow"
+            key, and make it duck by using the "down arrow" key.
+          </p>
+        </div>
       </div>
-      <div class="game-description">
-        Dinosaur T-Rex Game is a replica of the hidden Chrome browser game that
-        appears when there is no internet. Press the "space bar" key to start.
-        Make the dinosaur jump by using the "space bar" key or the "up arrow"
-        key, and make it duck by using the "down arrow" key.
+
+      <!-- Score Displayer row -->
+      <div class="row">
+        <div class="col text-center my-2">
+          <div id="score-displayer" class="fs-5">
+            Score: <span id="score">0</span> <br>
+            High-score: <span id="high-score">0</span>
+          </div>
+        </div>
       </div>
-      <div id="score-displayer">
-        Score: <span id="score">0</span> <br>
-        High-score: <span id="high-score">0</span>
-      </div>
+
+      <!--
+        The .game-container (i.e., the actual "board")
+        will be created dynamically by the JavaScript
+        and appended to the <body> or here in the container.
+        If you want it strictly inside the container, see the notes in play.js.
+      -->
+
     </div>
 
-    <!-- A Game Board will be dynamically introduced here at the start of the game
-    and the Dinosaur and the Obstacles will be dynamically added inside the Game Board-->
-
+    <!-- Optionally include Bootstrap JavaScript (for certain components) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    ></script>
   </body>
 </html>
