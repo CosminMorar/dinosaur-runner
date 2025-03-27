@@ -68,6 +68,16 @@ function playSound(soundFileName) {
   sound.play();
 }
 
+function flashGreenBackground() {
+  // Add the class that triggers the animation
+  document.body.classList.add('flash-green');
+
+  // Remove it once the animation finishes (after 1s in our CSS)
+  setTimeout(() => {
+    document.body.classList.remove('flash-green');
+  }, 1000);
+}
+
 function applyCollisionSlippage(el) {
   el.left += COLLISION_SLIPPAGE_LEFT;
   el.top += COLLISION_SLIPPAGE_TOP;
@@ -170,6 +180,7 @@ function updateScore() {
   // Play achievement sound for each 100 points achieved
   if (time / SCORE_UPDATE_RATE % POINTS_FOR_ACHIEVEMENT === 0) {
     playSound(POINTS_ACHIEVEMENT_SOUND_FILE_NAME);
+    flashGreenBackground();
   }
 }
 
